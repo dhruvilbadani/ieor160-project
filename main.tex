@@ -103,6 +103,10 @@
 \tableofcontents
 
 \newpage
+
+\section{Introduction}
+
+In this project, we aim to create a linear regression model to calculate the disease progression for diabetes from patients’ baseline measurements. We have 10 features to choose from, but restrict ourselves to 4 for a more interpretable model with better predictive value. In Part I, we optimize the selection of the best subset of 4 features, using statistics like the p-value and $R^2$ value. We compare different methods like heuristic-based selection, Lasso regularization and mixed-integer programming (for a subset of size 4) for this subset selection. In Part 2, we consider second-order interactions, and aim to choose 10 independent variables out of the 65 possible second-order variables. We use the same statistics (from Part 1) like the p-value and $R^2$ value, and also compare different methods like Lasso regularization and mixed-integer programming. The criterion we use to decide the better method in both parts is the out-of-sample accuracy.
  
 \section{Part 1}
 
@@ -135,7 +139,7 @@ With the given heuristic of using the variables with the five lowest p-values an
  $\{BMI, BP, S5, S6\}$ & 778372 & 0.450624   \\
  $\{Sex, BP, S5, S6\}$ & 874717 & 0.382623 \\
  $\{Sex, BMI, S5, S6\}$ & 774756 & 0.453176 \\
- $\{Sex, BMI, BP, S6\}$ & 862701 & 0.391104 \\
+$\{Sex, BMI, BP, S6\}$ & 862701 & 0.391104 \\
  $\{Sex, BMI, BP, S5\}$ & 772097 & 0.455053 \\
  [1ex] 
  \hline
@@ -155,26 +159,28 @@ With the given heuristic of using the variables with the five lowest p-values an
 
 \subsection{Lasso Regularization}
 
-The Lasso Regularization employs an L1 penalty to penalize for large coefficient values and to select features (drives coefficient of insignificant features to zero). The first table shows the error and corresponding $R^2$ values for each of the different lambda values. As lambda increases, we penalize more and, thus, the error increases and $R^2$ decreases. This is because more weight is being placed on the penalty term in the loss function and less weight is being placed on minimizing the original least squares term. The tradeoff is that as the $\lambda$ term increases, the model becomes simpler as fewer variables are selected.
+The Lasso Regularization employs an L1 penalty to penalize for large coefficient values and to select features (drives coefficient of insignificant features to zero). The first table shows the error and corresponding $R^2$ values for each of the different lambda values. As lambda increases, we penalize more and, thus, the error increases and $R^2$ decreases. This is because more weight is being placed on the penalty term in the loss function and less weight is being placed on minimizing the original least squares term. The tradeoff is that as the lambda term increases, the model becomes simpler as fewer variables are selected.
 
-In this case, the optimal value of lambda was $200$ and the regression coefficients and $R^2$ are shown in the second table. In this case BMI, BP, S3, S5, and S6 were selected via lasso regularization. 
+In this case, the minimum lambda value that yielded four features was $340$ as shown in the first table. We would like the minimum lambda value because as lambda increases $R^2$ decreases, which results in a worse fit. In this case, BMI, BP, S5 and S6 were selected via lasso regularization. The coefficients are given in the second table. 
+
+The best value of lambda in terms of $R^2$ is obviously 200, the minimum lambda value but it results in five variables being selected when we want to restrict the model to encompassing four variables. 
 
 \begin{center}
- \begin{tabular}{||c | c | c||} 
+ \begin{tabular}{||c | c | c| c ||} 
  \hline
- $\lambda$ & Error & $R^2$  \\ [0.5ex] 
+ $\lambda$ & Error & $R^2$ & Number of Variables Selected \\ [0.5ex] 
  \hline\hline
-  200 & 802793 & 0.433387   \\
-  220 & 810566 & 0.427902 \\
-  240 & 819078 & 0.421893 \\
-  260 & 828331 & 0.415363 \\
-  280 & 838324 & 0.40831 \\
-  300 & 849057 & 0.400734 \\
-  320 & 860531 & 0.392636 \\
-  340 & 871720 & 0.384739 \\
-  360 & 881977 & 0.377499 \\
-  380 & 892820 & 0.369846 \\
-  400 & 904250 & 0.361779 \\
+  200 & 802793 & 0.433387 & 5 \\
+  220 & 810566 & 0.427902 & 5\\
+  240 & 819078 & 0.421893 & 5\\
+  260 & 828331 & 0.415363 & 5\\
+  280 & 838324 & 0.40831 & 5\\
+  300 & 849057 & 0.400734 & 5\\
+  320 & 860531 & 0.392636 & 5\\
+  340 & 871720 & 0.384739 & 4\\
+  360 & 881977 & 0.377499 & 3\\
+  380 & 892820 & 0.369846 & 3\\
+  400 & 904250 & 0.361779 & 3\\
  [1ex] 
  \hline
 \end{tabular}
@@ -184,19 +190,19 @@ In this case, the optimal value of lambda was $200$ and the regression coefficie
 \begin{center}
  \begin{tabular}{||c | c||} 
  \hline
- $\lambda$ & 200 \\ 
- Error &  802793 \\
- $R^2$ & 0.433387 \\
+ $\lambda$ & 340 \\ 
+ Error &  871720 \\
+ $R^2$ & 0.384739 \\
  $B_{AGE}$ & 0 \\
  $B_{sex}$ & 0 \\
- $B_{BMI}$ & 455.688 \\
- $B_{BP}$ & 65.6527 \\
+ $B_{BMI}$ & 405.494 \\
+ $B_{BP}$ & 0.000540714 \\
  $B_{S1}$ & 0 \\
  $B_{S2}$ & 0 \\
- $B_{S3}$ & 66.4006 \\
+ $B_{S3}$ & 0 \\
  $B_{S4}$ & 0 \\
- $B_{S5}$ & 455.892 \\
- $B_{S6}$ & 55.8544 \\ 
+ $B_{S5}$ & 414.866 \\
+ $B_{S6}$ & 23.1162 \\ 
 [1ex] 
 \hline
 \end{tabular}
@@ -229,16 +235,18 @@ Using Mixed-integer Optimization, the regression coefficients, error and $R^2$ a
 
 \subsection{Comparison of Results}
 
-Looking at the accuracy of each method, the heuristic selection method had the least out-of-sample error, however the mixed integer optimization method is very close in second place. The lasso regularization method does the worst in terms of out-of-sample accuracy. 
+Looking at the accuracy of each method, using all 10 variables yielded the lowest out-of-sample error. This is likely because it gives the model better expressivity and captures the complexities of the linear relationship without overfitting the training data too much. However, the other methods result in a simpler model and do nearly as well. For example, the lowest four p-values and the heuristic selection method are a very close second place to using all 10 variables. These methods both result in the same error since they ended up choosing the same variables and the same coefficient values. The mixed integer optimization method is the next best, while lasso does the worst in terms of out-of-sample accuracy. Thus, simplifying the model did result in almost the same out-of-sample accuracy as using all 10 variables in the case of heuristic selection and lowest four p-value selection. 
 
 \begin{center}
  \begin{tabular}{||c | c||} 
  \hline
  Method & Error  \\ [0.5ex] 
  \hline\hline
- Heuristic Selection & 579396.8559607414   \\
- Lasso Regularization & 693913.9388466905 \\
- Mixed Integer Optimization & 583706.7341750131 \\
+ All 10 Variables & 574367.96703 \\
+ Lowest Four p-values & 579396.855961 \\
+ Heuristic Selection & 579396.855961   \\
+ Lasso Regularization & 693913.938847 \\
+ Mixed Integer Optimization & 583706.734175 \\
  [1ex] 
  \hline
 \end{tabular}
@@ -316,6 +324,9 @@ Using 9.57 as the regularization parameter we obtained the following values of t
 Out of sample error in part (f) = 573404.8630648409
 \\Out of sample error in part(g) = 573285.4410441783
 \\We observe that the mixed integer programming method of regression gives us a higher accuracy than the Lasso regression method when 10 independent variables are considered.
+
+\section{Conclusion}
+We find that in Part 1, when we were dealing with solely first-order interactions, using the given heuristic, we find that the four features with the lowest p-values ( BMI, S5, Sex, BP) are also the ones that have the lowest SSE and $R^2$ values. Lasso regularization, with the ideal lambda (340), chose a subset of 4 features - BMI, BP, S5 and S6. When we tried mixed-integer programming, it chose a different subset of 4 features -  BMI, BP, S1, and S5. Heuristic selection performed the best, with mixed-integer programming at a very close second place. In part 2, when we are considering second-order interactions, mixed integer programming outperforms Lasso regularization in terms of the out-of-sample error. One insight we gained from this is that Lasso regularization has a trade-off between the number of features it selects and the $R^2$ value - as we increase lambda, the model becomes simpler with the number of features reducing, but the $R^2$ value decreases too. Overall, the result in both parts is similar - mixed-integer programming outperforms Lasso regularization in both parts. 
 \newpage{}
 
 \section{Appendix: The Code}
@@ -329,7 +340,7 @@ reset;
 
 data reg_data.dat;
 
-print "Looking at the p-values, we should use BMI, S5, Sex, S6"; # Features from p-values
+print "Looking at the p-values, we should use BMI, S5, Sex, BP"; # Features from p-values
 
 var coeffs{1..n_features}; # coeffs[i] is the regression coefficient for the ith feature
 
@@ -339,7 +350,7 @@ subject to not_use_S2: coeffs[S2] = 0; # Use only the 4 features mentioned above
 subject to not_use_S3: coeffs[S3] = 0; # Use only the 4 features mentioned above
 subject to not_use_S4: coeffs[S4] = 0; # Use only the 4 features mentioned above
 subject to not_use_AGE: coeffs[AGE] = 0; # Use only the 4 features mentioned above
-subject to not_use_BP: coeffs[BP] = 0; # Use only the 4 features mentioned above
+subject to not_use_S6: coeffs[S6] = 0; # Use only the 4 features mentioned above
 
 solve;
 
@@ -843,35 +854,35 @@ n_features = 10 # The number of features
 n_train = 250 # The number of training samples
 
 def get_predictions(beta, X):
-  Y_pred = [] # List to store the predicitions
-  for x in X: # Going through all the data
-    y_pred = 0
-    for i in range(n_features):
-      y_pred += beta[i] * x[i] # simulating the dot product
-    Y_pred.append(y_pred) # Adding the prediction to the list
-  return Y_pred # Returning the list
+	Y_pred = [] # List to store the predicitions
+	for x in X: # Going through all the data
+		y_pred = 0
+		for i in range(n_features):
+			y_pred += beta[i] * x[i] # simulating the dot product
+		Y_pred.append(y_pred) # Adding the prediction to the list
+	return Y_pred # Returning the list
 
 def sse(beta, X, Y_actual):
-  Y_pred = get_predictions(beta, X) # Getting the predictions
-  squared_differences = [(Y_actual[i] - Y_pred[i])**2 for i in range(len(Y_pred))] # Calculating the sum of squared errors
-  return sum(squared_differences) # Returning the SSE
+	Y_pred = get_predictions(beta, X) # Getting the predictions
+	squared_differences = [(Y_actual[i] - Y_pred[i])**2 for i in range(len(Y_pred))] # Calculating the sum of squared errors
+	return sum(squared_differences) # Returning the SSE
 
 def read_data(filename):
-  X = [] # List to store all the data points
-  Y = [] # List to store all the target variables
-  with open(filename) as f: # Opening the file containing the data (NOT necessarily .dat)
-    lines = f.readlines() # Reading all the lines in the file
-    lines = lines[n_train + 1:] # Skipping the first n_train + 1 lines since we need out-of-sample error and the first line is just feature names
-    for line in lines: # Going through all lines
-      if "AGE" in line: # Checking if the word "AGE" is in the line 
-        continue # Skipping if the word "AGE" is in the line because if it is, the line is just feature names, not an actual sample
-      numbers = line.split() # Splitting the string
-      numbers = [float(number) for number in numbers] # Converting strings to numbers
-      y = numbers[-1] # Extracting the target variable
-      x = numbers[0:-1] # Extracting the features
-      X.append(x) # Adding the sample
-      Y.append(y) # Adding the target variable
-  return X, Y # returning the data points and target variables
+	X = [] # List to store all the data points
+	Y = [] # List to store all the target variables
+	with open(filename) as f: # Opening the file containing the data (NOT necessarily .dat)
+		lines = f.readlines() # Reading all the lines in the file
+		lines = lines[n_train + 1:] # Skipping the first n_train + 1 lines since we need out-of-sample error and the first line is just feature names
+		for line in lines: # Going through all lines
+			if "AGE" in line: # Checking if the word "AGE" is in the line 
+				continue # Skipping if the word "AGE" is in the line because if it is, the line is just feature names, not an actual sample
+			numbers = line.split() # Splitting the string
+			numbers = [float(number) for number in numbers] # Converting strings to numbers
+			y = numbers[-1] # Extracting the target variable
+			x = numbers[0:-1] # Extracting the features
+			X.append(x) # Adding the sample
+			Y.append(y) # Adding the target variable
+	return X, Y # returning the data points and target variables
 
 X, Y_actual = read_data('data.txt') # Getting the data points as X and target variables as Y
 # X[i] is the ith sample. X[i][j] is the jth feature of the ith sample
@@ -880,7 +891,7 @@ X, Y_actual = read_data('data.txt') # Getting the data points as X and target va
 coeffs_given = [-59.6, -241.6, 535.1, 241.7, -844.9, 407.4, -224.3, 285.2, 762.4, 169.6] # The coefficients given to us
 print("SSE All 10: {0}".format(sse(coeffs_given, X, Y_actual))) # The SSE using  the coefficients given
 
-coeffs_part_a = [0, -153.335, 610.97, 0, 0, 0, 0, 0, 588.782, 188.019] # The coefficients from part (a)
+coeffs_part_a = [0, -155.447, 597.687, 213.927, 0, 0, 0, 0, 600.31, 0] # The coefficients from part (a)
 print("SSE Part 1A: {0}".format(sse(coeffs_part_a, X, Y_actual))) # The SSE using  the coefficients from part (a)
 
 coeffs_part_b = [0, -155.447, 597.687, 213.927, 0, 0, 0, 0, 600.31, 0] # The coefficients from part (b)
@@ -891,6 +902,7 @@ print("SSE Part 1C: {0}".format(sse(coeffs_part_c, X, Y_actual))) # The SSE usin
 
 coeffs_part_d = [0, 0, 603.681, 200.878, -267.699, 0, 0, 0, 711.644, 0] # The coefficients from part (d)
 print("SSE Part 1D: {0}".format(sse(coeffs_part_d, X, Y_actual))) # The SSE using  the coefficients from part (d)
+
 
 \end{lstlisting}
 

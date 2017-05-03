@@ -1,3 +1,1032 @@
+\documentclass[15pt,a4paper,openright]{article} 
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amsmath,amsfonts,fullpage,hyphenat,booktabs,graphicx,setspace,amssymb,mathrsfs} 
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{thmtools}
+\usepackage[rightcaption]{sidecap}
+\usepackage{comment}
+%\usepackage[colorlinks,linkcolor=black,citecolor=blue,urlcolor=black]{hyperref} \onehalfspacing \bibpunct{(}{)}{;}{a}{}{,} 
+\usepackage{breqn}
+\usepackage{esvect}
+\usepackage{multicol}
+\usepackage[numbers]{natbib}
+\usepackage{color,soul}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing}
+\usepackage{tikz-cd}
+\usepackage{environ}
+\usepackage{subcaption}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{float}
+\usepackage{indentfirst}
+\usepackage{soul}
+\usepackage{listings}
+
+
+
+\renewcommand{\baselinestretch}{1.5}
+
+\newtheorem{theorem}{Theorem}
+%\newenvironment{proof}{\paragraph{Proof:}}{\hfill$\square$}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+%\newtheorem{exmp}{Example}
+\declaretheoremstyle[headfont=\normalfont\bfseries]{normalhead}
+\declaretheorem[style=normalhead]{example}
+\newtheorem{proposition}{Proposition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{remark}{Remark}
+\graphicspath{{Term paper/}}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstdefinelanguage{AMPL}{keywords={set,param,var,arc,integer,minimize,maximize,subject,to,node,sum,in,Current,complements,integer,solve_result_num,IN,contains,less,suffix,INOUT,default,logical,sum,Infinity,dimen,max,symbolic
+,Initial,div,min,table,LOCAL,else,option,then,OUT,environ,setof ,union,all,exists,shell_exitcodeuntil,binary,forall,solve_exitcodewhile ,by,if,solve_messagewithin,check,in,solve_result
+},sensitive=true,comment=[l]{\#}}
+
+\lstset{frame=tb,
+  language=AMPL,
+  backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\ttfamily},
+  numbers=none,
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\renewcommand{\thesubsection}{\thesection\alph{subsection}}
+
+
+
+\title{IEOR160 Project}
+\author{Dhrushil Badani, Dhruvil Badani, Ravneet Madaan, Shreyas Bhave}
+\date{April 2017}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+ 
+\section{Part 1}
+
+\vspace{4mm}
+
+\subsection{Four Most Significant Variables}
+
+The four most significant variables are BMI, S5, Sex, BP in order of increasing p-value. Each of these variables has a p-value below 0.05 which is a widely used significance level. This p-value is testing the null hypothesis that the coefficient is equal to 0 (there is no relation between the given variable and response variable). Thus, the smaller the p-value the more confidence we have in rejecting the null hypothesis, which indicates that there is a significant relationship between the given variable and response variable. The code for this part shows the coefficients and statistics with just these four variables used.
+
+\begin{center}
+ \begin{tabular}{||c | c||} 
+ \hline
+ Error & $R^2$  \\ [0.5ex] 
+ \hline\hline
+ 772097 & 0.455053   \\ 
+ [1ex] 
+ \hline
+\end{tabular}
+\end{center}
+
+\subsection{Best Combination of Four Independent Variables}
+
+With the given heuristic of using the variables with the five lowest p-values and using a subset of size four, we find that the subset that uses Sex, BMI, BP and S5 has the highest $R^2$ value as shown in the table below. The coefficients, SSE and $R^2$ value are all shown in the second table. These are the four features with the least p-value so it makes sense that they have the minimum SSE and $R^2$ value. 
+
+\begin{center}
+ \begin{tabular}{||c | c | c||} 
+ \hline
+ Subset of Variables & Error & $R^2$  \\ [0.5ex] 
+ \hline\hline
+ $\{BMI, BP, S5, S6\}$ & 778372 & 0.450624   \\
+ $\{Sex, BP, S5, S6\}$ & 874717 & 0.382623 \\
+ $\{Sex, BMI, S5, S6\}$ & 774756 & 0.453176 \\
+ $\{Sex, BMI, BP, S6\}$ & 862701 & 0.391104 \\
+ $\{Sex, BMI, BP, S5\}$ & 772097 & 0.455053 \\
+ [1ex] 
+ \hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+ \begin{tabular}{||c | c | c | c | c | c | c||} 
+ \hline
+ Best Subset & Error & $R^2$ & $B_{sex}$ & $B_{BMI}$ & $B_{BP}$ & $B_{S5}$ \\ [0.5ex] 
+ \hline\hline
+ $\{Sex, BMI, BP, S5\}$ & 772097 & 0.455053 & -155.447 & 597.687 & 213.927 & 600.31 \\
+ [1ex] 
+ \hline
+\end{tabular}
+\end{center}
+
+\subsection{Lasso Regularization}
+
+The Lasso Regularization employs an L1 penalty to penalize for large coefficient values and to select features (drives coefficient of insignificant features to zero). The first table shows the error and corresponding $R^2$ values for each of the different lambda values. As lambda increases, we penalize more and, thus, the error increases and $R^2$ decreases. This is because more weight is being placed on the penalty term in the loss function and less weight is being placed on minimizing the original least squares term. The tradeoff is that as the $\lambda$ term increases, the model becomes simpler as fewer variables are selected.
+
+In this case, the optimal value of lambda was $200$ and the regression coefficients and $R^2$ are shown in the second table. In this case BMI, BP, S3, S5, and S6 were selected via lasso regularization. 
+
+\begin{center}
+ \begin{tabular}{||c | c | c||} 
+ \hline
+ $\lambda$ & Error & $R^2$  \\ [0.5ex] 
+ \hline\hline
+  200 & 802793 & 0.433387   \\
+  220 & 810566 & 0.427902 \\
+  240 & 819078 & 0.421893 \\
+  260 & 828331 & 0.415363 \\
+  280 & 838324 & 0.40831 \\
+  300 & 849057 & 0.400734 \\
+  320 & 860531 & 0.392636 \\
+  340 & 871720 & 0.384739 \\
+  360 & 881977 & 0.377499 \\
+  380 & 892820 & 0.369846 \\
+  400 & 904250 & 0.361779 \\
+ [1ex] 
+ \hline
+\end{tabular}
+\end{center}
+
+
+\begin{center}
+ \begin{tabular}{||c | c||} 
+ \hline
+ $\lambda$ & 200 \\ 
+ Error &  802793 \\
+ $R^2$ & 0.433387 \\
+ $B_{AGE}$ & 0 \\
+ $B_{sex}$ & 0 \\
+ $B_{BMI}$ & 455.688 \\
+ $B_{BP}$ & 65.6527 \\
+ $B_{S1}$ & 0 \\
+ $B_{S2}$ & 0 \\
+ $B_{S3}$ & 66.4006 \\
+ $B_{S4}$ & 0 \\
+ $B_{S5}$ & 455.892 \\
+ $B_{S6}$ & 55.8544 \\ 
+[1ex] 
+\hline
+\end{tabular}
+\end{center}
+
+
+\subsection{Mixed-integer Optimization}
+
+Using Mixed-integer Optimization, the regression coefficients, error and $R^2$ are shown in the table below. This modeled as a mixed-integer optimization problem that uses at most 4 variables. In this case, BMI, BP, S1, and S5 are chosen. This subset did not appear under the heuristic method used in part b. 
+
+\begin{center}
+ \begin{tabular}{||c | c||} 
+ \hline
+ Error &  755094 \\ 
+ $R^2$ & 0.467054 \\
+ $B_{AGE}$ & 0 \\
+ $B_{sex}$ & 0 \\
+ $B_{BMI}$ & 603.681 \\
+ $B_{BP}$ & 200.878 \\
+ $B_{S1}$ & -267.699\\
+ $B_{S2}$ & 0 \\
+ $B_{S3}$ & 0 \\
+ $B_{S4}$ & 0 \\
+ $B_{S5}$ & 711.644 \\
+ $B_{S6}$ & 0 \\ 
+[1ex] 
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Comparison of Results}
+
+Looking at the accuracy of each method, the heuristic selection method had the least out-of-sample error, however the mixed integer optimization method is very close in second place. The lasso regularization method does the worst in terms of out-of-sample accuracy. 
+
+\begin{center}
+ \begin{tabular}{||c | c||} 
+ \hline
+ Method & Error  \\ [0.5ex] 
+ \hline\hline
+ Heuristic Selection & 579396.8559607414   \\
+ Lasso Regularization & 693913.9388466905 \\
+ Mixed Integer Optimization & 583706.7341750131 \\
+ [1ex] 
+ \hline
+\end{tabular}
+\end{center}
+
+
+\newpage{}
+\section{Part 2}
+
+\vspace{4mm}
+\subsection{Lasso with Second Order Interactions}
+We used a regularization parameter of 9.57 while implementing lasso regression with second order interactions. 
+Using 9.57 as the regularization parameter we obtained the following values of the coefficients :
+\\\textbf{Coefficients for linear terms($\beta_{i}$)} = 
+\begin{enumerate}
+    \item -46.3591,
+\item -226.708
+\item 534.415 
+\item 230.201, 
+\item 316.992
+\item 0
+\item 12.5382
+\item 204.877
+\item 582.585
+\item 160.929
+\end{enumerate}
+
+\textbf{Coefficients for quadratic terms ($\beta_{jk}$)} = 
+\\$\begin{matrix}
+0&0&0&0&0&0&0&0&0&0\\
+.&0&0&0&0&0&0&0&0&0\\
+.&.&0&0&0&0&0&0&0&0\\
+.&.&.&0&0&0&0&0&0&0\\
+.&.&.&.&0&0&0&0&0&0\\
+.&.&.&.&.&0&0&0&0&0\\
+.&.&.&.&.&.&0&0&0&0\\
+.&.&.&.&.&.&.&0&0&0\\
+.&.&.&.&.&.&.&.&0&0\\
+.&.&.&.&.&.&.&.&.&102.204\\
+\end{matrix}$
+\\\\We used the value of regularization parameter 9.57 as that enables us to select 10 independent variables out of the 65 possible variables available to us.
+\\\textbf{The value of $R^{2}$ for this problem} = 0.498677
+\newpage{}
+\subsection{Mixed Integer Optimization with Second Order Interactions}
+\\\textbf{Linear regression coefficients ($\beta_{i}$)} =
+\begin{enumerate}
+   \item 0
+\item -233.553
+\item 595.908
+\item 263.431
+\item -327.887 
+\item 0
+\item 0
+\item 242.18 
+\item 561.239
+\item 121.949
+\end{enumerate}
+\textbf{Coefficients for quadratic terms ($\beta_{jk}$)} = 
+\\$\begin{matrix}
+0&0&0&3540.81&0&0&0&0&0&0\\
+.&0&4250.64&0&0&0&-3850.05&0&0&0\\
+.&.&0&0&0&0&0&0&0&0\\
+.&.&.&0&0&0&0&0&0&0\\
+.&.&.&.&0&0&0&0&0&0\\
+.&.&.&.&.&0&0&0&0&0\\
+.&.&.&.&.&.&0&0&0&0\\
+.&.&.&.&.&.&.&0&0&0\\
+.&.&.&.&.&.&.&.&0&0\\
+.&.&.&.&.&.&.&.&.&0\\
+\end{matrix}$
+\\\\\textbf{The value of $R^{2}$ for this problem} = 0.523882
+
+\newpage{}
+\subsection{Comparison of Results with Second Order Interactions}
+Out of sample error in part (f) = 573404.8630648409
+\\Out of sample error in part(g) = 573285.4410441783
+\\We observe that the mixed integer programming method of regression gives us a higher accuracy than the Lasso regression method when 10 independent variables are considered.
+\newpage{}
+
+\section{Appendix: The Code}
+
+\begin{lstlisting}[language=AMPL, caption=1a Code]
+option solver minos; # No integer programming here
+
+#########################################################################
+
+reset;
+
+data reg_data.dat;
+
+print "Looking at the p-values, we should use BMI, S5, Sex, S6"; # Features from p-values
+
+var coeffs{1..n_features}; # coeffs[i] is the regression coefficient for the ith feature
+
+minimize sse: sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2; # We need to minimize sum of squared errors
+subject to not_use_S1: coeffs[S1] = 0; # Use only the 4 features mentioned above
+subject to not_use_S2: coeffs[S2] = 0; # Use only the 4 features mentioned above
+subject to not_use_S3: coeffs[S3] = 0; # Use only the 4 features mentioned above
+subject to not_use_S4: coeffs[S4] = 0; # Use only the 4 features mentioned above
+subject to not_use_AGE: coeffs[AGE] = 0; # Use only the 4 features mentioned above
+subject to not_use_BP: coeffs[BP] = 0; # Use only the 4 features mentioned above
+
+solve;
+
+var error = sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2; # The SSE with coeffs
+param y_tot = sum{i in 1..n_train} mat[i,Y]; # Sum of all y
+param y_hat = y_tot/n_train; # Mean of all y
+param ss_tot = sum{i in 1..n_train}(mat[i,Y] - y_hat)^2; # Denominator in r-squared calculation
+var r_sq = 1 - error/ss_tot; # Formula for r-squared
+
+display sse, error, y_hat, ss_tot, r_sq, coeffs; # Displaying results
+
+\end{lstlisting}
+
+\begin{lstlisting}[language=AMPL, caption=1b Code]
+option solver minos;
+
+#########################################################################
+
+reset;
+
+data reg_data.dat;
+
+print "Leaving out SEX";
+
+var coeffs{1..n_features}; # coeffs[i] is the regression coefficient for the ith feature
+
+minimize sse: sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2; # We need to minimize the sum of squared errors
+subject to not_use_S1: coeffs[S1] = 0; # Use only the features mentioned above
+subject to not_use_S2: coeffs[S2] = 0; # Use only the features mentioned above
+subject to not_use_S3: coeffs[S3] = 0; # Use only the features mentioned above
+subject to not_use_S4: coeffs[S4] = 0; # Use only the features mentioned above
+subject to not_use_AGE: coeffs[AGE] = 0; # Use only the features mentioned above
+subject to not_use_SEX: coeffs[SEX] = 0; # Use only the features mentioned above
+
+solve;
+
+var error = sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2; # The SSE with coeffs
+param y_tot = sum{i in 1..n_train} mat[i,Y]; # Sum of all y
+param y_hat = y_tot/n_train; # Mean of all y
+param ss_tot = sum{i in 1..n_train}(mat[i,Y] - y_hat)^2; # Denominator in r-squared calculation
+var r_sq = 1 - error/ss_tot; # Formula for r-squared
+
+display sse, error, y_hat, ss_tot, r_sq, coeffs; # Displaying results
+
+#########################################################################
+
+reset;
+
+data reg_data.dat;
+
+print "Leaving out BMI";
+
+var coeffs{1..n_features}; # coeffs[i] is the regression coefficient for the ith feature
+
+minimize sse: sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2; # We need to minimize the sum of squared errors
+subject to not_use_S1: coeffs[S1] = 0; # Use only the features mentioned above
+subject to not_use_S2: coeffs[S2] = 0; # Use only the features mentioned above
+subject to not_use_S3: coeffs[S3] = 0; # Use only the features mentioned above
+subject to not_use_S4: coeffs[S4] = 0; # Use only the features mentioned above
+subject to not_use_AGE: coeffs[AGE] = 0; # Use only the features mentioned above
+subject to not_use_BMI: coeffs[BMI] = 0; # Use only the features mentioned above
+
+solve;
+
+var error = sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2; # The SSE with coeffs
+param y_tot = sum{i in 1..n_train} mat[i,Y]; # Sum of all y
+param y_hat = y_tot/n_train; # Mean of all y
+param ss_tot = sum{i in 1..n_train}(mat[i,Y] - y_hat)^2; # Denominator in r-squared calculation
+var r_sq = 1 - error/ss_tot; # Formula for r-squared
+
+display sse, error, y_hat, ss_tot, r_sq, coeffs; # Displaying results 
+
+#########################################################################
+
+reset;
+
+data reg_data.dat;
+
+print "Leaving out BP";
+
+var coeffs{1..n_features}; # coeffs[i] is the regression coefficient for the ith feature
+
+minimize sse: sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2; # We need to minimize the sum of squared errors
+subject to not_use_S1: coeffs[S1] = 0; # Use only the features mentioned above
+subject to not_use_S2: coeffs[S2] = 0; # Use only the features mentioned above
+subject to not_use_S3: coeffs[S3] = 0; # Use only the features mentioned above
+subject to not_use_S4: coeffs[S4] = 0; # Use only the features mentioned above
+subject to not_use_AGE: coeffs[AGE] = 0; # Use only the features mentioned above
+subject to not_use_BP: coeffs[BP] = 0; # Use only the features mentioned above
+
+solve;
+
+var error = sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2; # The SSE with coeffs
+param y_tot = sum{i in 1..n_train} mat[i,Y]; # Sum of all y
+param y_hat = y_tot/n_train; # Mean of all y
+param ss_tot = sum{i in 1..n_train}(mat[i,Y] - y_hat)^2; # Denominator in r-squared calculation
+var r_sq = 1 - error/ss_tot; # Formula for r-squared
+
+display sse, error, y_hat, ss_tot, r_sq, coeffs; # Displaying results
+
+#########################################################################
+
+reset;
+
+data reg_data.dat;
+
+print "Leaving out S5";
+
+var coeffs{1..n_features}; # coeffs[i] is the regression coefficient for the ith feature
+
+minimize sse: sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2; # We need to minimize the sum of squared errors
+subject to not_use_S1: coeffs[S1] = 0; # Use only the features mentioned above
+subject to not_use_S2: coeffs[S2] = 0; # Use only the features mentioned above
+subject to not_use_S3: coeffs[S3] = 0; # Use only the features mentioned above
+subject to not_use_S4: coeffs[S4] = 0; # Use only the features mentioned above
+subject to not_use_AGE: coeffs[AGE] = 0; # Use only the features mentioned above
+subject to not_use_S5: coeffs[S5] = 0; # Use only the features mentioned above
+
+solve;
+
+var error = sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2; # The SSE with coeffs
+param y_tot = sum{i in 1..n_train} mat[i,Y]; # Sum of all y
+param y_hat = y_tot/n_train; # Mean of all y
+param ss_tot = sum{i in 1..n_train}(mat[i,Y] - y_hat)^2; # Denominator in r-squared calculation
+var r_sq = 1 - error/ss_tot; # Formula for r-squared
+
+display sse, error, y_hat, ss_tot, r_sq, coeffs; # Displaying results
+
+#########################################################################
+
+reset;
+
+data reg_data.dat;
+
+print "Leaving out S6";
+
+var coeffs{1..n_features}; # coeffs[i] is the regression coefficient for the ith feature
+
+minimize sse: sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2; # We need to minimize the sum of squared errors
+subject to not_use_S1: coeffs[S1] = 0; # Use only the features mentioned above
+subject to not_use_S2: coeffs[S2] = 0; # Use only the features mentioned above
+subject to not_use_S3: coeffs[S3] = 0; # Use only the features mentioned above
+subject to not_use_S4: coeffs[S4] = 0; # Use only the features mentioned above
+subject to not_use_AGE: coeffs[AGE] = 0; # Use only the features mentioned above
+subject to not_use_S6: coeffs[S6] = 0; # Use only the features mentioned above
+
+solve;
+
+var error = sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2; # The SSE with coeffs
+param y_tot = sum{i in 1..n_train} mat[i,Y]; # Sum of all y
+param y_hat = y_tot/n_train; # Mean of all y
+param ss_tot = sum{i in 1..n_train}(mat[i,Y] - y_hat)^2; # Denominator in r-squared calculation
+var r_sq = 1 - error/ss_tot; # Formula for r-squared
+
+display sse, error, y_hat, ss_tot, r_sq, coeffs; # Displaying results
+
+\end{lstlisting}
+
+\begin{lstlisting}[language=AMPL, caption=1c Code]
+reset;
+reset options;
+
+option solver cplex;
+
+data reg_data.dat;
+
+var coeffs{1..n_features}; # coeffs[i] is the regression coefficient for the ith feature
+var z{1..n_features}; # z[i] is the absolute value of coeffs[i]
+
+print "Lambda =", lambdas[1]; # Setting lambda
+
+minimize sse: sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2 + sum{k in 1..n_features}lambdas[1]*z[k]; # We need to minimize the sum of squared errors + the regularization penalty
+subject to abs_1 {j in 1..n_features}: z[j] >= coeffs[j]; # To implement the absolute value l1-penalty
+subject to abs_2 {j in 1..n_features}: z[j] >= -coeffs[j]; # To implement the absolute value l1-penalty
+
+solve;
+
+var error = sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2; # The SSE with coeffs
+param y_tot = sum{i in 1..n_train} mat[i,Y]; # Sum of all y
+param y_hat = y_tot/n_train; # Mean of all y
+param ss_tot = sum{i in 1..n_train}(mat[i,Y] - y_hat)^2; # Denominator in r-squared calculation
+var r_sq = 1 - error/ss_tot; # Formula for r-squared
+
+display sse, error, y_hat, ss_tot, r_sq, coeffs, z;
+
+#############################################################################
+
+reset;
+reset options;
+
+option solver cplex;
+
+data reg_data.dat;
+
+var coeffs{1..n_features}; # coeffs[i] is the regression coefficient for the ith feature
+var z{1..n_features}; # z[i] is the absolute value of coeffs[i]
+
+print "Lambda =", lambdas[2]; # Setting lambda
+
+minimize sse: sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2 + sum{k in 1..n_features}lambdas[2]*z[k]; # We need to minimize the sum of squared errors + the regularization penalty
+subject to abs_1 {j in 1..n_features}: z[j] >= coeffs[j]; # To implement the absolute value l1-penalty
+subject to abs_2 {j in 1..n_features}: z[j] >= -coeffs[j]; # To implement the absolute value l1-penalty
+
+solve;
+
+var error = sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2; # The SSE with coeffs
+param y_tot = sum{i in 1..n_train} mat[i,Y]; # Sum of all y
+param y_hat = y_tot/n_train; # Mean of all y
+param ss_tot = sum{i in 1..n_train}(mat[i,Y] - y_hat)^2; # Denominator in r-squared calculation
+var r_sq = 1 - error/ss_tot; # Formula for r-squared
+
+display sse, error, y_hat, ss_tot, r_sq, coeffs, z;
+
+#############################################################################
+
+reset;
+reset options;
+
+option solver cplex;
+
+data reg_data.dat;
+
+var coeffs{1..n_features}; # coeffs[i] is the regression coefficient for the ith feature
+var z{1..n_features}; # z[i] is the absolute value of coeffs[i]
+
+print "Lambda =", lambdas[3]; # Setting lambda
+
+minimize sse: sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2 + sum{k in 1..n_features}lambdas[3]*z[k]; # We need to minimize the sum of squared errors + the regularization penalty
+subject to abs_1 {j in 1..n_features}: z[j] >= coeffs[j]; # To implement the absolute value l1-penalty
+subject to abs_2 {j in 1..n_features}: z[j] >= -coeffs[j]; # To implement the absolute value l1-penalty
+
+solve;
+
+var error = sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2; # The SSE with coeffs
+param y_tot = sum{i in 1..n_train} mat[i,Y]; # Sum of all y
+param y_hat = y_tot/n_train; # Mean of all y
+param ss_tot = sum{i in 1..n_train}(mat[i,Y] - y_hat)^2; # Denominator in r-squared calculation
+var r_sq = 1 - error/ss_tot; # Formula for r-squared
+
+display sse, error, y_hat, ss_tot, r_sq, coeffs, z;
+
+#############################################################################
+
+reset;
+reset options;
+
+option solver cplex;
+
+data reg_data.dat;
+
+var coeffs{1..n_features}; # coeffs[i] is the regression coefficient for the ith feature
+var z{1..n_features}; # z[i] is the absolute value of coeffs[i]
+
+print "Lambda =", lambdas[4]; # Setting lambda
+
+minimize sse: sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2 + sum{k in 1..n_features}lambdas[4]*z[k]; # We need to minimize the sum of squared errors + the regularization penalty
+subject to abs_1 {j in 1..n_features}: z[j] >= coeffs[j]; # To implement the absolute value l1-penalty
+subject to abs_2 {j in 1..n_features}: z[j] >= -coeffs[j]; # To implement the absolute value l1-penalty
+
+solve;
+
+var error = sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2; # The SSE with coeffs
+param y_tot = sum{i in 1..n_train} mat[i,Y]; # Sum of all y
+param y_hat = y_tot/n_train; # Mean of all y
+param ss_tot = sum{i in 1..n_train}(mat[i,Y] - y_hat)^2; # Denominator in r-squared calculation
+var r_sq = 1 - error/ss_tot; # Formula for r-squared
+
+display sse, error, y_hat, ss_tot, r_sq, coeffs, z;
+
+#############################################################################
+
+reset;
+reset options;
+
+option solver cplex;
+
+data reg_data.dat;
+
+var coeffs{1..n_features}; # coeffs[i] is the regression coefficient for the ith feature
+var z{1..n_features}; # z[i] is the absolute value of coeffs[i]
+
+print "Lambda =", lambdas[5]; # Setting lambda
+
+minimize sse: sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2 + sum{k in 1..n_features}lambdas[5]*z[k]; # We need to minimize the sum of squared errors + the regularization penalty
+subject to abs_1 {j in 1..n_features}: z[j] >= coeffs[j]; # To implement the absolute value l1-penalty
+subject to abs_2 {j in 1..n_features}: z[j] >= -coeffs[j]; # To implement the absolute value l1-penalty
+
+solve;
+
+var error = sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2; # The SSE with coeffs
+param y_tot = sum{i in 1..n_train} mat[i,Y]; # Sum of all y
+param y_hat = y_tot/n_train; # Mean of all y
+param ss_tot = sum{i in 1..n_train}(mat[i,Y] - y_hat)^2; # Denominator in r-squared calculation
+var r_sq = 1 - error/ss_tot; # Formula for r-squared
+
+display sse, error, y_hat, ss_tot, r_sq, coeffs, z;
+
+#############################################################################
+
+reset;
+reset options;
+
+option solver cplex;
+
+data reg_data.dat;
+
+var coeffs{1..n_features}; # coeffs[i] is the regression coefficient for the ith feature
+var z{1..n_features}; # z[i] is the absolute value of coeffs[i]
+
+print "Lambda =", lambdas[6]; # Setting lambda
+
+minimize sse: sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2 + sum{k in 1..n_features}lambdas[6]*z[k]; # We need to minimize the sum of squared errors + the regularization penalty
+subject to abs_1 {j in 1..n_features}: z[j] >= coeffs[j]; # To implement the absolute value l1-penalty
+subject to abs_2 {j in 1..n_features}: z[j] >= -coeffs[j]; # To implement the absolute value l1-penalty
+
+solve;
+
+var error = sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2; # The SSE with coeffs
+param y_tot = sum{i in 1..n_train} mat[i,Y]; # Sum of all y
+param y_hat = y_tot/n_train; # Mean of all y
+param ss_tot = sum{i in 1..n_train}(mat[i,Y] - y_hat)^2; # Denominator in r-squared calculation
+var r_sq = 1 - error/ss_tot; # Formula for r-squared
+
+display sse, error, y_hat, ss_tot, r_sq, coeffs, z;
+
+#############################################################################
+
+reset;
+reset options;
+
+option solver cplex;
+
+data reg_data.dat;
+
+var coeffs{1..n_features}; # coeffs[i] is the regression coefficient for the ith feature
+var z{1..n_features}; # z[i] is the absolute value of coeffs[i]
+
+print "Lambda =", lambdas[7]; # Setting lambda
+
+minimize sse: sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2 + sum{k in 1..n_features}lambdas[7]*z[k]; # We need to minimize the sum of squared errors + the regularization penalty
+subject to abs_1 {j in 1..n_features}: z[j] >= coeffs[j]; # To implement the absolute value l1-penalty
+subject to abs_2 {j in 1..n_features}: z[j] >= -coeffs[j]; # To implement the absolute value l1-penalty
+
+solve;
+
+var error = sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2; # The SSE with coeffs
+param y_tot = sum{i in 1..n_train} mat[i,Y]; # Sum of all y
+param y_hat = y_tot/n_train; # Mean of all y
+param ss_tot = sum{i in 1..n_train}(mat[i,Y] - y_hat)^2; # Denominator in r-squared calculation
+var r_sq = 1 - error/ss_tot; # Formula for r-squared
+
+display sse, error, y_hat, ss_tot, r_sq, coeffs, z;
+
+#############################################################################
+
+reset;
+reset options;
+
+option solver cplex;
+
+data reg_data.dat;
+
+var coeffs{1..n_features}; # coeffs[i] is the regression coefficient for the ith feature
+var z{1..n_features}; # z[i] is the absolute value of coeffs[i]
+
+print "Lambda =", lambdas[8]; # Setting lambda
+
+minimize sse: sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2 + sum{k in 1..n_features}lambdas[8]*z[k]; # We need to minimize the sum of squared errors + the regularization penalty
+subject to abs_1 {j in 1..n_features}: z[j] >= coeffs[j]; # To implement the absolute value l1-penalty
+subject to abs_2 {j in 1..n_features}: z[j] >= -coeffs[j]; # To implement the absolute value l1-penalty
+
+solve;
+
+var error = sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2; # The SSE with coeffs
+param y_tot = sum{i in 1..n_train} mat[i,Y]; # Sum of all y
+param y_hat = y_tot/n_train; # Mean of all y
+param ss_tot = sum{i in 1..n_train}(mat[i,Y] - y_hat)^2; # Denominator in r-squared calculation
+var r_sq = 1 - error/ss_tot; # Formula for r-squared
+
+display sse, error, y_hat, ss_tot, r_sq, coeffs, z;
+
+#############################################################################
+
+reset;
+reset options;
+
+option solver cplex;
+
+data reg_data.dat;
+
+var coeffs{1..n_features}; # coeffs[i] is the regression coefficient for the ith feature
+var z{1..n_features}; # z[i] is the absolute value of coeffs[i]
+
+print "Lambda =", lambdas[9]; # Setting lambda
+
+minimize sse: sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2 + sum{k in 1..n_features}lambdas[9]*z[k]; # We need to minimize the sum of squared errors + the regularization penalty
+subject to abs_1 {j in 1..n_features}: z[j] >= coeffs[j]; # To implement the absolute value l1-penalty
+subject to abs_2 {j in 1..n_features}: z[j] >= -coeffs[j]; # To implement the absolute value l1-penalty
+
+solve;
+
+var error = sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2; # The SSE with coeffs
+param y_tot = sum{i in 1..n_train} mat[i,Y]; # Sum of all y
+param y_hat = y_tot/n_train; # Mean of all y
+param ss_tot = sum{i in 1..n_train}(mat[i,Y] - y_hat)^2; # Denominator in r-squared calculation
+var r_sq = 1 - error/ss_tot; # Formula for r-squared
+
+display sse, error, y_hat, ss_tot, r_sq, coeffs, z;
+
+#############################################################################
+
+reset;
+reset options;
+
+option solver cplex;
+
+data reg_data.dat;
+
+var coeffs{1..n_features}; # coeffs[i] is the regression coefficient for the ith feature
+var z{1..n_features}; # z[i] is the absolute value of coeffs[i]
+
+print "Lambda =", lambdas[n_features]; # Setting lambda
+
+minimize sse: sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2 + sum{k in 1..n_features}lambdas[n_features]*z[k]; # We need to minimize the sum of squared errors + the regularization penalty
+subject to abs_1 {j in 1..n_features}: z[j] >= coeffs[j]; # To implement the absolute value l1-penalty
+subject to abs_2 {j in 1..n_features}: z[j] >= -coeffs[j]; # To implement the absolute value l1-penalty
+
+solve;
+
+var error = sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2; # The SSE with coeffs
+param y_tot = sum{i in 1..n_train} mat[i,Y]; # Sum of all y
+param y_hat = y_tot/n_train; # Mean of all y
+param ss_tot = sum{i in 1..n_train}(mat[i,Y] - y_hat)^2; # Denominator in r-squared calculation
+var r_sq = 1 - error/ss_tot; # Formula for r-squared
+
+display sse, error, y_hat, ss_tot, r_sq, coeffs, z;
+
+#############################################################################
+
+reset;
+reset options;
+
+option solver cplex;
+
+data reg_data.dat;
+
+var coeffs{1..n_features}; # coeffs[i] is the regression coefficient for the ith feature
+var z{1..n_features}; # z[i] is the absolute value of coeffs[i]
+
+print "Lambda =", lambdas[11]; # Setting lambda
+
+minimize sse: sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2 + sum{k in 1..n_features}lambdas[11]*z[k]; # We need to minimize the sum of squared errors + the regularization penalty
+subject to abs_1 {j in 1..n_features}: z[j] >= coeffs[j]; # To implement the absolute value l1-penalty
+subject to abs_2 {j in 1..n_features}: z[j] >= -coeffs[j]; # To implement the absolute value l1-penalty
+
+solve;
+
+var error = sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2; # The SSE with coeffs
+param y_tot = sum{i in 1..n_train} mat[i,Y]; # Sum of all y
+param y_hat = y_tot/n_train; # Mean of all y
+param ss_tot = sum{i in 1..n_train}(mat[i,Y] - y_hat)^2; # Denominator in r-squared calculation
+var r_sq = 1 - error/ss_tot; # Formula for r-squared
+
+display sse, error, y_hat, ss_tot, r_sq, coeffs, z;
+
+#############################################################################
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=AMPL, caption=1d Code]
+reset;
+reset options;
+
+data reg_data.dat;
+
+var coeffs{1..n_features}; # coeffs[i] is the regression coefficient for the ith feature
+var used{1..n_features} binary; # used[i] is 1 if the ith feature is used, 0 otherwise
+
+minimize sse: sum{i in 1..n_train}(mat[i,Y] - sum{j in 1..n_features}(coeffs[j]*mat[i,j]))^2; # We need to minimize the sum of squared errors
+subject to sum_of_coeffs_constraint: sum{j in 1..n_features}used[j] <= 4; # Can use at most 4 features
+subject to binary1{j in 1..n_features}: coeffs[j] <= first_order_coeff_bound*used[j]; # To make sure that coeffs[j] is not nonzero when used[j] is zero
+subject to binary2{j in 1..n_features}: coeffs[j] >= -first_order_coeff_bound*used[j]; # To make sure that coeffs[j] is not nonzero when used[j] is zero
+
+option solver cplex;
+
+solve;
+
+var error = sum{i in 1..n_train} (sum{j in 1..n_features}coeffs[j]*mat[i,j] - mat[i, Y])^2; # The SSE with coeffs
+param y_tot = sum{i in 1..n_train} mat[i,Y]; # Sum of all y
+param y_hat = y_tot/n_train; # Mean of all y
+param ss_tot = sum{i in 1..n_train}(mat[i,Y] - y_hat)^2; # Denominator in r-squared calculation
+var r_sq = 1 - error/ss_tot; # Formula for r-squared
+
+display r_sq, coeffs, used;
+
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python, caption=1e Code]
+n_features = 10 # The number of features
+n_train = 250 # The number of training samples
+
+def get_predictions(beta, X):
+  Y_pred = [] # List to store the predicitions
+  for x in X: # Going through all the data
+    y_pred = 0
+    for i in range(n_features):
+      y_pred += beta[i] * x[i] # simulating the dot product
+    Y_pred.append(y_pred) # Adding the prediction to the list
+  return Y_pred # Returning the list
+
+def sse(beta, X, Y_actual):
+  Y_pred = get_predictions(beta, X) # Getting the predictions
+  squared_differences = [(Y_actual[i] - Y_pred[i])**2 for i in range(len(Y_pred))] # Calculating the sum of squared errors
+  return sum(squared_differences) # Returning the SSE
+
+def read_data(filename):
+  X = [] # List to store all the data points
+  Y = [] # List to store all the target variables
+  with open(filename) as f: # Opening the file containing the data (NOT necessarily .dat)
+    lines = f.readlines() # Reading all the lines in the file
+    lines = lines[n_train + 1:] # Skipping the first n_train + 1 lines since we need out-of-sample error and the first line is just feature names
+    for line in lines: # Going through all lines
+      if "AGE" in line: # Checking if the word "AGE" is in the line 
+        continue # Skipping if the word "AGE" is in the line because if it is, the line is just feature names, not an actual sample
+      numbers = line.split() # Splitting the string
+      numbers = [float(number) for number in numbers] # Converting strings to numbers
+      y = numbers[-1] # Extracting the target variable
+      x = numbers[0:-1] # Extracting the features
+      X.append(x) # Adding the sample
+      Y.append(y) # Adding the target variable
+  return X, Y # returning the data points and target variables
+
+X, Y_actual = read_data('data.txt') # Getting the data points as X and target variables as Y
+# X[i] is the ith sample. X[i][j] is the jth feature of the ith sample
+# Y[i] is the ith target variable
+
+coeffs_given = [-59.6, -241.6, 535.1, 241.7, -844.9, 407.4, -224.3, 285.2, 762.4, 169.6] # The coefficients given to us
+print("SSE All 10: {0}".format(sse(coeffs_given, X, Y_actual))) # The SSE using  the coefficients given
+
+coeffs_part_a = [0, -153.335, 610.97, 0, 0, 0, 0, 0, 588.782, 188.019] # The coefficients from part (a)
+print("SSE Part 1A: {0}".format(sse(coeffs_part_a, X, Y_actual))) # The SSE using  the coefficients from part (a)
+
+coeffs_part_b = [0, -155.447, 597.687, 213.927, 0, 0, 0, 0, 600.31, 0] # The coefficients from part (b)
+print("SSE Part 1B: {0}".format(sse(coeffs_part_b, X, Y_actual))) # The SSE using  the coefficients from part (b)
+
+coeffs_part_c = [0, 0, 405.494, 0.000540696, 0, 0, 0, 0, 414.866, 23.1162] # The coefficients from part (c)
+print("SSE Part 1C: {0}".format(sse(coeffs_part_c, X, Y_actual))) # The SSE using  the coefficients from part (c)
+
+coeffs_part_d = [0, 0, 603.681, 200.878, -267.699, 0, 0, 0, 711.644, 0] # The coefficients from part (d)
+print("SSE Part 1D: {0}".format(sse(coeffs_part_d, X, Y_actual))) # The SSE using  the coefficients from part (d)
+
+\end{lstlisting}
+
+\begin{lstlisting}[language=AMPL, caption=2f Code]
+reset;
+reset options;
+
+option solver cplex;
+
+data reg_data.dat;
+
+var coeffs{1..n_features}; # coeffs[i] is the regression coefficient for the ith feature
+var coeffs_second_order{j in 1..n_features, k in j..n_features}; # coeffs[i,j] is the regression coefficient for the second order interaction between the ith and jth feature
+var z_coeffs{1..n_features}; # z[i] is the absolute value of coeffs[i]
+var z_coeffs_second_order{j in 1..n_features, k in j..n_features}; # z[i,j] is the absolute value of coeffs_second_order[i,j]
+
+print "Lambda =", lambda_part_2;
+
+minimize sse: sum{i in 1..n_train} (sum{j in 1..n_features}(coeffs[j]*mat[i,j]) + sum{j in 1..n_features, k in j..n_features}(mat[i, j] * mat[i, k] * coeffs_second_order[j,k]) - mat[i, Y])**2 + sum{k in 1..n_features}lambda_part_2*z_coeffs[k] + sum{j in 1..n_features, k in j..n_features} lambda_part_2*z_coeffs_second_order[j,k]; # We need to minimize the sum of the squared errors + the regularization penalty
+subject to abs_1 {j in 1..n_features}: z_coeffs[j] >= coeffs[j]; # To implement absolute value function
+subject to abs_2 {j in 1..n_features}: z_coeffs[j] >= -coeffs[j]; # To implement absolute value function
+subject to abs_3{j in 1..n_features, k in j..n_features}: z_coeffs_second_order[j,k] >= coeffs_second_order[j,k]; # To implement absolute value function
+subject to abs_4{j in 1..n_features, k in j..n_features}: z_coeffs_second_order[j,k] >= -coeffs_second_order[j,k]; # To implement absolute value function
+solve;
+
+var error = sum{i in 1..n_train} (sum{j in 1..n_features}(coeffs[j]*mat[i,j]) + sum{j in 1..n_features, k in j..n_features}(mat[i, j] * mat[i, k] * coeffs_second_order[j,k]) - mat[i, Y])^2; # The SSE with coeffs and coeffs_second_order
+param y_tot = sum{i in 1..n_train} mat[i,Y]; # Sum of all y
+param y_hat = y_tot/n_train; # Mean of all y
+param ss_tot = sum{i in 1..n_train}(mat[i,Y] - y_hat)^2; # Denominator in r-squared
+var r_sq = 1 - error/ss_tot; # r-squared
+var adj_r_sq = r_sq - (1-r_sq)*(2/247);
+
+display sse, error, y_hat, ss_tot, r_sq, coeffs, coeffs_second_order;
+\end{lstlisting}
+		
+\begin{lstlisting}[language=AMPL, caption=2g Code]
+reset;
+reset options;
+
+data reg_data.dat;
+
+var coeffs{1..n_features}; # coeffs[i] is the regression coefficient for the ith feature
+var coeffs_second_order{j in 1..n_features, k in j..n_features}; # coeffs[i,j] is the regression coefficient for the second order interaction between the ith and jth feature
+var used{1..n_features} binary; # used[i] is 1 if the ith feature is used, 0 otherwise
+var used_second_order{j in 1..n_features, k in j..n_features} binary; # used_second_order[i,j] is 1 if the second order interaction between the ith and jth feature is used, 0 otherwise
+
+minimize sse: sum{i in 1..n_train}(mat[i,Y] - sum{j in 1..n_features}(coeffs[j]*mat[i,j]) - sum{j in 1..n_features, k in j..n_features}(mat[i,j]*mat[i,k]*coeffs_second_order[j,k]))^2; # We need to minimize the sum of squared errors
+subject to sum_of_coeffs_constraint: sum{j in 1..n_features}used[j] + sum{j in 1..n_features, k in j..n_features} used_second_order[j,k] = n_features; # Use at most n_features features
+subject to binary1{j in 1..n_features}: coeffs[j] <= first_order_coeff_bound*used[j]; # To make sure that coeffs[i] is not nonzero when used[i] is 0
+subject to binary2{j in 1..n_features}: coeffs[j] >= -first_order_coeff_bound*used[j]; # To make sure that coeffs[i] is not nonzero when used[i] is 0
+subject to binary3{j in 1..n_features, k in j..n_features}: coeffs_second_order[j,k] <= second_order_coeff_bound*used_second_order[j,k]; # To make sure that coeffs[i,j] is not nonzero when used[i,j] is 0
+subject to binary4{j in 1..n_features, k in j..n_features}: coeffs_second_order[j,k] >= -second_order_coeff_bound*used_second_order[j,k];
+option solver cplex; # To make sure that coeffs[i,j] is not nonzero when used[i,j] is 0
+
+solve;
+
+var error = sum{i in 1..n_train} (sum{j in 1..n_features}(coeffs[j]*mat[i,j]) + sum{j in 1..n_features, k in j..n_features}(mat[i, j] * mat[i, k] * coeffs_second_order[j,k]) - mat[i, Y])^2; # The SSE with coeffs and coeffs_second_order
+param y_tot = sum{i in 1..n_train} mat[i,Y]; # Sum of all y
+param y_hat = y_tot/n_train; # Mean of all y
+param ss_tot = sum{i in 1..n_train}(mat[i,Y] - y_hat)^2; # Denominator in r-squared
+var r_sq = 1 - error/ss_tot; # r-squared
+var adj_r_sq = r_sq - (1-r_sq)*(2/247);
+
+display sse,r_sq, error, coeffs,coeffs_second_order, used, used_second_order;
+\end{lstlisting}
+
+\begin{lstlisting}[language=AMPL, caption=2h Code]
+n_features = 10 # The number of features (first order)
+n_train = 250 # The number of training samples
+
+def get_predictions(beta, beta_matrix, X):
+  Y_pred = [] # List to store the predicitions
+  for x in X: # Going through all the data
+    y_pred = 0
+    for i in range(n_features):
+      y_pred += beta[i] * x[i] # simulating the dot product
+    for i in range(n_features):
+      for j in range(i, n_features):
+        y_pred += beta_matrix[i][j]*x[i]*x[j] # including second order interactions
+    Y_pred.append(y_pred) # Adding the prediction to the list
+  return Y_pred # Returning the list
+
+def sse(beta, beta_matrix, X, Y_actual):
+  Y_pred = get_predictions(beta, beta_matrix, X) # Getting the predictions
+  squared_differences = [(Y_actual[i] - Y_pred[i])**2 for i in range(len(Y_pred))] # Calculating the sum of squared errors
+  return sum(squared_differences) # Returning the SSE
+
+def read_data(filename):
+  X = [] # List to store all the data points
+  Y = [] # List to store all the target variables
+  with open(filename) as f: # Opening the file containing the data (NOT necessarily .dat)
+    lines = f.readlines() # Reading all the lines in the file
+    lines = lines[n_train + 1:] # Skipping the first 251 lines since we need out-of-sample error and the first line is just feature names
+    for line in lines: # Going through all lines
+      if "AGE" in line: # Checking if the word "AGE" is in the line 
+        continue # Skipping if the word "AGE" is in the line because if it is, the line is just feature names, not an actual sample
+      numbers = line.split() # Splitting the string
+      numbers = [float(number) for number in numbers] # Converting strings to numbers
+      y = numbers[-1] # Extracting the target variable
+      x = numbers[0:-1] # Extracting the features
+      X.append(x) # Adding the sample
+      Y.append(y) # Adding the target variable
+  return X, Y # returning the data points and target variables
+
+X, Y_actual = read_data('data.txt') # Getting the data points as X and target variables as Y
+# X[i] is the ith sample. X[i][j] is the jth feature of the ith sample
+# Y[i] is the ith target variable
+
+coeffs_part_a = [-46.3591,-226.708, 534.415, 230.201, -316.992, -4.3493e-08, 12.5382, 204.877, 582.585, 160.929] # coefficients for first order features in Part 2f
+coeffs_part_a_matrix= [[1.09417e-06, 0.000102456, 1.09665e-07, 4.80696e-07, 1.91375e-08, -2.53955e-08, 1.98485e-08, 8.45594e-08, 3.59663e-07, 1.69066e-07],
+[0,-1.80499e-08, 2.86425e-07, 4.22607e-07, 9.68603e-08, -2.63781e-10, -1.32483e-07, -3.07998e-08, 1.38711e-07, 7.5646e-08],
+[0, 0, 1.46462e-07, 1.92339e-07, 6.51947e-08, 9.46737e-08, 7.90349e-08, 1.8639e-07, 8.70322e-08, 4.95379e-07],
+[0,0, 0, 7.47294e-08,-1.63143e-08, -4.19059e-09, 2.81844e-08, 5.16799e-08, 5.4629e-08, 1.00506e-07],
+[0,0,0,0,3.59483e-08,5.64592e-09, -6.18133e-08, -5.2328e-08, 5.35758e-08,7.07302e-08],
+[0,0,0,0,0,-5.44664e-08, -8.03162e-09, -1.5056e-08, 1.33778e-07, 7.95601e-08],
+[0,0,0,0,0,0,4.66955e-08, 3.47648e-08, -4.29466e-08, 8.84204e-08],
+[0,0,0,0,0,0,0,4.1884e-08, -1.03307e-09, 2.61773e-07],
+[0,0,0,0,0,0,0,0,-1.75994e-08, 2.13799e-07],
+[0,0,0,0,0,0,0,0,0,102.204]] # coefficients for second order features in Part 2f
+print("SSE Part 2F: {0}".format(sse(coeffs_part_a,coeffs_part_a_matrix, X, Y_actual)))                        
+
+coeffs_part_b = [0,-233.553, 595.908, 263.431, -327.887 ,0, 0, 242.18 ,561.239, 121.949] # coefficients for first order features in Part 2g
+coeffs_part_b_matrix= [[0,0,0, 3540.81, 0, 0, 0, 0, 0, 0],
+[0, 0, 4250.64, 0, 0, 0, -3850.05,0,0,0],
+[0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0]] # coefficients for second order features in Part 2g
+print("SSE Part 2G: {0}".format(sse(coeffs_part_b,coeffs_part_b_matrix, X, Y_actual)))
+\end{lstlisting}
+
+\begin{lstlisting}[language=AMPL, caption = data file]
 reset;
 param n_samples >= 0; # Total number of samples. In this case, 442
 param n_features >= 0; # Total number of features. In this case, 10
@@ -480,3 +1509,5 @@ param mat: 1 2 3 4 5 6 7 8 9 10 11 :=
 440   0.041708445  0.05068012 -0.0159062628  1.728186e-02 -0.037343734 -1.383982e-02  0.024992657 -0.0110795198 -0.0468794828  0.015490730  -20.1334842
 441  -0.045472478 -0.04464164  0.0390621530  1.215131e-03  0.016318427  1.528299e-02  0.028674294  0.0265596235  0.0445283740 -0.025930339   67.8665158
 442  -0.045472478 -0.04464164 -0.0730303027 -8.141377e-02  0.083740117  2.780893e-02 -0.173815785 -0.0394933829 -0.0042198597  0.003064409  -95.1334842;
+\end{lstlisting}
+\end{document}

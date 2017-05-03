@@ -1,17 +1,18 @@
 reset;
-param mat{1..442, 1..11};
-param AGE;
-param SEX;
-param BMI;
-param BP;
-param S1;
-param S2;
-param S3;
-param S4;
-param S5;
-param S6;
-param Y;
-param lambdas{1..11};
+param mat{1..442, 1..11}; # mat[i,j] is the jth feature of the ith sample. If j=11, it is the target variable of the ith sample
+param AGE; # number for feature
+param SEX; # number for feature
+param BMI; # number for feature
+param BP; # number for feature
+param S1; # number for feature
+param S2; # number for feature
+param S3; # number for feature
+param S4; # number for feature
+param S5; # number for feature
+param S6; # number for feature
+param Y; # number for target variable
+param lambdas{1..11}; # All possible lambda values for Part I as a list
+param lambda_part_2; # Lambda value for Part II
 data;
 param AGE := 1;
 param SEX := 2;
@@ -25,6 +26,7 @@ param S5 := 9;
 param S6 := 10;
 param Y := 11;
 param lambdas := 1 200 2 220 3 240 4 260 5 280 6 300 7 320 8 340 9 360 10 380 11 400;
+param lambda_part_2 := 9.57;
 param mat: 1 2 3 4 5 6 7 8 9 10 11 := 
 1 0.038075906  0.05068012  0.0616962065  2.187235e-02 -0.044223498 -3.482076e-02  0.043400846 -0.0025922620  0.0199084209 -0.017646125   -1.1334842
 2  -0.001882017 -0.04464164 -0.0514740612 -2.632783e-02 -0.008448724 -1.916334e-02 -0.074411564 -0.0394933829 -0.0683297436 -0.092204050  -77.1334842

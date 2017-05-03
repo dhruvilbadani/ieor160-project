@@ -39,7 +39,7 @@ X, Y_actual = read_data('data.txt') # Getting the data points as X and target va
 coeffs_given = [-59.6, -241.6, 535.1, 241.7, -844.9, 407.4, -224.3, 285.2, 762.4, 169.6] # The coefficients given to us
 print("SSE All 10: {0}".format(sse(coeffs_given, X, Y_actual))) # The SSE using  the coefficients given
 
-coeffs_part_a = [0, -153.335, 610.97, 0, 0, 0, 0, 0, 588.782, 188.019] # The coefficients from part (a)
+coeffs_part_a = [0, -155.447, 597.687, 213.927, 0, 0, 0, 0, 600.31, 0] # The coefficients from part (a)
 print("SSE Part 1A: {0}".format(sse(coeffs_part_a, X, Y_actual))) # The SSE using  the coefficients from part (a)
 
 coeffs_part_b = [0, -155.447, 597.687, 213.927, 0, 0, 0, 0, 600.31, 0] # The coefficients from part (b)

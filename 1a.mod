@@ -6,7 +6,7 @@ reset;
 
 data reg_data.dat;
 
-print "Looking at the p-values, we should use BMI, S5, Sex, S6"; # Features from p-values
+print "Looking at the p-values, we should use BMI, S5, Sex, BP"; # Features from p-values
 
 var coeffs{1..n_features}; # coeffs[i] is the regression coefficient for the ith feature
 
@@ -16,7 +16,7 @@ subject to not_use_S2: coeffs[S2] = 0; # Use only the 4 features mentioned above
 subject to not_use_S3: coeffs[S3] = 0; # Use only the 4 features mentioned above
 subject to not_use_S4: coeffs[S4] = 0; # Use only the 4 features mentioned above
 subject to not_use_AGE: coeffs[AGE] = 0; # Use only the 4 features mentioned above
-subject to not_use_BP: coeffs[BP] = 0; # Use only the 4 features mentioned above
+subject to not_use_S6: coeffs[S6] = 0; # Use only the 4 features mentioned above
 
 solve;
 
